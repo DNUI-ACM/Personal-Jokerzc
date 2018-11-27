@@ -1,0 +1,75 @@
+#include<iostream>
+using namespace std;
+struct Date{
+	int year,month,day;
+	Date(const int & year,const int & month,const int & day):year( year),month( month),day( day){
+	}
+	~Date(){
+	}
+	
+	int Day(){
+		int s=0;
+		for(int i=1980;i<year;i++)
+		{
+			if(Date(i,0,0).isright())
+		    s+=366;
+		    else
+		    s+=365;
+		}
+		int a[11] = {31,28+isright(),31,30,31,30,31,31,30,31,30};
+		for(int i=0;i<month-1;i++)
+		s += a[i];
+		s += day;
+		return s;
+	}
+	
+	void shuru()
+	{
+		cin>>year;
+		cin>>month;
+		cin>>day;
+	}
+    
+	bool isright()
+	{
+		if((year%4==0)&&year%100!=0||year%400==0)
+		return 1;
+		else
+		return 0;
+	}
+	
+	bool isPeriod(Date &date1,Date &date2){
+		if(Day()<date2.Day()&&date1.Day()<Day())
+		return 1;
+		else
+		return 0;
+	}
+	
+	int operator -(Date cha)
+	{
+		return Day()-cha.Day();
+	}
+    
+};
+int main()
+{
+	Date date(0,0,0);
+	cout<<"请输入初始年月日："<<endl;
+	date.shuru();
+	cout<<"请输入两个日期："<<endl;
+	Date one(0,0,0),two(0,0,0);
+	one.shuru();
+	two.shuru();
+	if(date.isPeriod(one,two))
+	cout<<"yes"<<endl;
+	else
+	cout<<"no"<<endl;
+	if(date.isright())
+	cout<<"闰年"<<endl;
+	else
+	cout<<"不是闰年"<<endl;
+	Date three(0,0,0);
+	cout<<"请输入要比较的日期："<<endl;
+	three.shuru();
+	cout<<"相差"<<three-date<<"天"<<endl; 
+}
